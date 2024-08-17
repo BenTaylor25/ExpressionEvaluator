@@ -40,61 +40,74 @@ internal class ExprParser : Parser
     /// <summary>
     /// Expr ::= Val {Operator Val}.
     /// </summary>
-    private void Expr()
+    private string Expr()
     {
-        Val();
+        string exprString = "";
+        exprString += Val();
 
         while (CheckAny(OPERATOR_TERMINAL_START))
         {
-            Operator();
-            Val();
+            exprString += Operator();
+            exprString += Val();
         }
+
+        Console.WriteLine(exprString);
+        return exprString;   // Evaluate first.
     }
 
     /// <summary>
     /// Val ::= Bexpr | Num.
     /// </summary>
-    private void Val()
+    private string Val()
     {
         if (CheckAny(BEXPR_TERMINAL_START))
         {
-            Bexpr();
+            return Bexpr();
         }
         else
         {
-            Num();
+            return Num();
         }
     }
 
     /// <summary>
     /// Operator ::= '+' | '-' | '*' | '/'.
     /// </summary>
-    private void Operator()
+    private string Operator()
     {
         if (CheckAny(OPERATOR_TERMINAL_START))
         {
+            string operatorString = CurrentChar().ToString();
             Scan();
+            return operatorString;
         }
+
+        return "";
     }
 
     /// <summary>
     /// Bexpr ::= '(' Expr ')'.
     /// </summary>
-    private void Bexpr()
+    private string Bexpr()
     {
         Scan('(');
-        Expr();
+        string bexprString = Expr();
         Scan(')');
+
+        return bexprString;
     }
 
     /// <summary>
     /// Num ::= ['-'] Digit {Digit}.
     /// </summary>
-    private void Num()
+    private string Num()
     {
+        string numString = "";
+
         if (Check('-'))
         {
             Scan('-');
+            numString += '-';
         }
 
         if (!CheckAny(DIGITS))
@@ -104,7 +117,10 @@ internal class ExprParser : Parser
 
         while (CheckAny(DIGITS))
         {
+            numString += CurrentChar();
             Scan();
         }
+
+        return numString;
     }
 }
