@@ -53,7 +53,6 @@ internal class ExprParser : Parser
             exprString += Val();
         }
 
-        Console.WriteLine(exprString);
         return ReversePolishNotation.EvaluateExpression(exprString);
     }
 
