@@ -52,7 +52,7 @@ internal class ExprParser : Parser
         }
 
         Console.WriteLine(exprString);
-        return exprString;   // Evaluate first.
+        return ReversePolishNotation.EvaluateExpression(exprString);
     }
 
     /// <summary>
