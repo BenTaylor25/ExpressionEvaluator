@@ -23,9 +23,9 @@ internal class ExprParser : Parser
         VAL_TERMINAL_START.AddRange(DIGITS);
     }
 
-    public void Parse()
+    public string Parse()
     {
-        Expr();
+        string value = Expr();
 
         if (State == ParserState.NotChecked && Check('\0'))
         {
@@ -35,6 +35,8 @@ internal class ExprParser : Parser
         {
             State = ParserState.Failed;
         }
+
+        return value;
     }
 
     /// <summary>

@@ -12,14 +12,12 @@ internal static class ReversePolishNotation
     public static string EvaluateExpression(string infixExpr)
     {
         List<string> infixExprTokens = TokeniseExpr(infixExpr);
-        foreach (string s in infixExprTokens) Console.Write(s + ", ");
-        Console.WriteLine();
 
         List<string> rpnExprTokens = InfixToRPN(infixExprTokens);
-        foreach (string s in rpnExprTokens) Console.Write(s + ", ");
-        Console.WriteLine();
 
-        return infixExpr;
+        string value = EvaluateRPN(rpnExprTokens);
+
+        return value;
     }
 
     private static List<string> TokeniseExpr(string infixExpr)
@@ -100,4 +98,62 @@ internal static class ReversePolishNotation
         return precedence;
     }
 
+    private static string EvaluateRPN(List<string> rpnExprTokens)
+    {
+        Stack<double> valueStack = new();
+
+        foreach (string token in rpnExprTokens)
+        {
+            if (token == "+")
+            {
+                double b = valueStack.Pop();
+                double a = valueStack.Pop();
+
+                valueStack.Push(a + b);
+            }
+            else if (token == "-")
+            {
+                double b = valueStack.Pop();
+                double a = valueStack.Pop();
+
+                valueStack.Push(a - b);
+            }
+            else if (token == "*")
+            {
+                double b = valueStack.Pop();
+                double a = valueStack.Pop();
+
+                valueStack.Push(a * b);
+            }
+            else if (token == "/")
+            {
+                double b = valueStack.Pop();
+                double a = valueStack.Pop();
+
+                valueStack.Push(a / b);
+            }
+            else
+            {
+                bool success = Double.TryParse(token, out double val);
+
+                if (success)
+                {
+                    valueStack.Push(val);
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to parse '{token}' as a double.");
+                }
+            }
+        }
+
+        if (valueStack.Count != 1)
+        {
+            Console.WriteLine("Value Stack Size not equal to 1 after RPN Evaluation");
+        }
+
+        double finalValue = valueStack.Pop();
+
+        return finalValue.ToString();
+    }
 }
