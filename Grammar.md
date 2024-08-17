@@ -17,11 +17,11 @@ Formal Langage Grammars like a Compiler would.
 Expr ::= Val {Operator Val}.
 
 Operator ::= '+' | '-' | '*' | '/'.
-Val ::= Bexpr | Num | '-' Num.
+Val ::= Bexpr | Num.
 
 Bexpr ::= '(' Expr ')'.
 
-Num ::= Digit [Digit].
+Num ::= ['-'] Digit {Digit}.
 Digit ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'.
 ```
 

@@ -1,2 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using ExpressionEvaluator;
+
+Console.Write("Expr: ");
+string inputExpr = Console.ReadLine() ?? "";
+inputExpr = String.Concat(inputExpr.Where(c => !Char.IsWhiteSpace(c)));
+
+ExprParser parser = new(inputExpr);
+
+parser.Parse();
+
+Console.WriteLine(parser.State.ToString());
