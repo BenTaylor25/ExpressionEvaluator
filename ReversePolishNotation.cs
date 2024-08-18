@@ -78,21 +78,14 @@ internal static class ReversePolishNotation
             {
                 int newPrecedence = OPERATORS[token];
 
-                if (newPrecedence > GetHeadPrecedence(operatorStack))
+                while (
+                    newPrecedence <= GetHeadPrecedence(operatorStack)
+                )
                 {
-                    operatorStack.Push(token);
+                    rpnTokens.Add(operatorStack.Pop());
                 }
-                else
-                {
-                    while (
-                        newPrecedence <= GetHeadPrecedence(operatorStack)
-                    )
-                    {
-                        rpnTokens.Add(operatorStack.Pop());
-                    }
 
-                    operatorStack.Push(token);
-                }
+                operatorStack.Push(token);
             }
             else
             {
