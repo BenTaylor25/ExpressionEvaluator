@@ -1,18 +1,18 @@
 ## Grammar
 
-Bracketed expressions are difficult to deal with.  
-The shunting-yard algorithm can deal with them, but only if you have
-special handling that treats brackets as sort of pseudo-operators.  
-Typically when you need to push an operator to the operator stack, you
-first have to check if the head is of greater-or-equal presidence.
-With a left-bracket, you just add it regardless. Then if you have an
-operator of lower presidence, that just gets added to the stack as well
-even though the brackets should have high presidence.
-
 The shunting-yard algorithm is definitely possible (and more sensible
 than what I'm about to suggest) but I think it woud be more fun to tap into
 Formal Langage Grammars like a Compiler would.
 
+<a href='https://en.wikipedia.org/wiki/Formal_grammar'>Formal Grammars</a>
+are a way of representing different components in a block of data.
+Components can be comprised of other components, and we can scan through
+the data programmatically based on what we expect to see.
+
+If, while we're scanning through a string, we see a token that is invalid,
+we know that the input is invalid.
+
+I have used EBNF syntax to describe the grammar used in this solution:
 ```
 Expr ::= Val {Operator Val}.
 
