@@ -7,5 +7,4 @@ inputExpr = String.Concat(inputExpr.Where(c => !Char.IsWhiteSpace(c)));
 ExprParser parser = new(inputExpr);
 
 string value = parser.Parse();
-
 Console.WriteLine(value);
