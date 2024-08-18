@@ -53,7 +53,12 @@ internal class ExprParser : Parser
             exprString += Val();
         }
 
-        return ReversePolishNotation.EvaluateExpression(exprString);
+        var result = ReversePolishNotation.EvaluateExpression(exprString);
+
+        string value = result.expressionIsValid ?
+            result.value : "Expression is invalid.";
+
+        return value;
     }
 
     /// <summary>

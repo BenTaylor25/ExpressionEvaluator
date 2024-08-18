@@ -1,3 +1,4 @@
+namespace ExpressionEvaluator;
 
 internal static class ReversePolishNotation
 {
@@ -13,19 +14,27 @@ internal static class ReversePolishNotation
         { "-", 1 }
     };
 
+    public struct EvaluateExpressionResult
+    {
+        public bool expressionIsValid;
+        public string value;
+    }
+
     /// <summary>
     /// Takes an unbracketed infix expression and returns its value
     /// in string form.
     /// </summary>
-    public static string EvaluateExpression(string infixExpr)
+    public static EvaluateExpressionResult EvaluateExpression(
+        string infixExpr
+    )
     {
         List<string> infixExprTokens = TokeniseExpr(infixExpr);
 
         List<string> rpnExprTokens = InfixToRPN(infixExprTokens);
 
-        string value = EvaluateRPN(rpnExprTokens);
+        EvaluateExpressionResult result = EvaluateRPN(rpnExprTokens);
 
-        return value;
+        return result;
     }
 
     /// <summary>
@@ -123,7 +132,9 @@ internal static class ReversePolishNotation
     /// Take a list of expression tokens in Reverse Polish Notation and
     /// evaluate the expression.
     /// </summary>
-    private static string EvaluateRPN(List<string> rpnExprTokens)
+    private static EvaluateExpressionResult EvaluateRPN(
+        List<string> rpnExprTokens
+    )
     {
         Stack<double> valueStack = new();
 
@@ -172,6 +183,12 @@ internal static class ReversePolishNotation
                     Console.WriteLine(
                         $"Failed to parse '{token}' as a double."
                     );
+
+                    return new()
+                    {
+                        expressionIsValid = false,
+                        value = string.Empty
+                    };
                 }
             }
         }
@@ -181,10 +198,20 @@ internal static class ReversePolishNotation
             Console.WriteLine(
                 "Value Stack Size not equal to 1 after RPN Evaluation"
             );
+
+            return new()
+            {
+                expressionIsValid = false,
+                value = string.Empty
+            };
         }
 
         double finalValue = valueStack.Pop();
 
-        return finalValue.ToString();
+        return new()
+        {
+            expressionIsValid = true,
+            value = finalValue.ToString()
+        };
     }
 }
