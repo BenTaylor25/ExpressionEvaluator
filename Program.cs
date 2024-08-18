@@ -7,4 +7,12 @@ inputExpr = String.Concat(inputExpr.Where(c => !Char.IsWhiteSpace(c)));
 ExprParser parser = new(inputExpr);
 
 string value = parser.Parse();
-Console.WriteLine(value);
+
+if (parser.State == ParserState.Succeeded)
+{
+    Console.WriteLine(value);
+}
+else
+{
+    Console.WriteLine("Expression is invalid.");
+}
