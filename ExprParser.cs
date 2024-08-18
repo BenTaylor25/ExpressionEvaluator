@@ -104,7 +104,7 @@ internal class ExprParser : Parser
     }
 
     /// <summary>
-    /// Num ::= ['-'] Digit {Digit}.
+    /// Num ::= ['-'] Digit {Digit} ['.' Digit {Digit}].
     /// </summary>
     private string Num()
     {
@@ -125,6 +125,23 @@ internal class ExprParser : Parser
         {
             numString += CurrentChar();
             Scan();
+        }
+
+        if (Check('.'))
+        {
+            numString += CurrentChar();
+            Scan();
+
+            if (!CheckAny(DIGITS))
+            {
+                State = ParserState.Failed;
+            }
+
+            while (CheckAny(DIGITS))
+            {
+                numString += CurrentChar();
+                Scan();
+            }
         }
 
         return numString;
