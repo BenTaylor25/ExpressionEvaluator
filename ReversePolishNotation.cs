@@ -133,34 +133,36 @@ internal static class ReversePolishNotation
 
         foreach (string token in rpnExprTokens)
         {
-            if (token == "+")
+            if (OPERATORS.ContainsKey(token))
             {
+                // This will need to be refactored in order to handle
+                // operators that use more or less than 2 operands.
+
                 double b = valueStack.Pop();
                 double a = valueStack.Pop();
 
-                valueStack.Push(a + b);
+                switch (token)
+                {
+                    case "+":
+                        valueStack.Push(a + b);
+                        break;
+                    case "-":
+                        valueStack.Push(a - b);
+                        break;
+                    case "*":
+                        valueStack.Push(a * b);
+                        break;
+                    case "/":
+                        valueStack.Push(a / b);
+                        break;
+                    default:
+                        Console.WriteLine(
+                            $"Encountered unhandled operator '{token}'."
+                        );
+                        break;
+                }
             }
-            else if (token == "-")
-            {
-                double b = valueStack.Pop();
-                double a = valueStack.Pop();
 
-                valueStack.Push(a - b);
-            }
-            else if (token == "*")
-            {
-                double b = valueStack.Pop();
-                double a = valueStack.Pop();
-
-                valueStack.Push(a * b);
-            }
-            else if (token == "/")
-            {
-                double b = valueStack.Pop();
-                double a = valueStack.Pop();
-
-                valueStack.Push(a / b);
-            }
             else
             {
                 bool success = Double.TryParse(token, out double val);
@@ -171,14 +173,18 @@ internal static class ReversePolishNotation
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to parse '{token}' as a double.");
+                    Console.WriteLine(
+                        $"Failed to parse '{token}' as a double."
+                    );
                 }
             }
         }
 
         if (valueStack.Count != 1)
         {
-            Console.WriteLine("Value Stack Size not equal to 1 after RPN Evaluation");
+            Console.WriteLine(
+                "Value Stack Size not equal to 1 after RPN Evaluation"
+            );
         }
 
         double finalValue = valueStack.Pop();
