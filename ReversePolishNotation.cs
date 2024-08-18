@@ -41,7 +41,8 @@ internal static class ReversePolishNotation
         
         for (int i = 0; i < infixExpr.Length; i++)
         {
-            // This would break if you were to add a multi-character operator.
+            // This would break if you were to add a
+            // multi-character operator.
             if (OPERATORS.ContainsKey(infixExpr[i].ToString()))
             {
                 Tokenised.Add(currentString);
@@ -83,7 +84,9 @@ internal static class ReversePolishNotation
                 }
                 else
                 {
-                    while (newPrecedence <= GetHeadPrecedence(operatorStack))
+                    while (
+                        newPrecedence <= GetHeadPrecedence(operatorStack)
+                    )
                     {
                         rpnTokens.Add(operatorStack.Pop());
                     }
