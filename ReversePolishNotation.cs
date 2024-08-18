@@ -180,7 +180,7 @@ internal static class ReversePolishNotation
                 }
                 else
                 {
-                    Console.WriteLine(
+                    Logging.LogError(
                         $"Failed to parse '{token}' as a double."
                     );
 
@@ -195,7 +195,7 @@ internal static class ReversePolishNotation
 
         if (valueStack.Count != 1)
         {
-            Console.WriteLine(
+            Logging.LogError(
                 "Value Stack Size not equal to 1 after RPN Evaluation"
             );
 
