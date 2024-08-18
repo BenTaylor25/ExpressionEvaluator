@@ -1,5 +1,8 @@
 ﻿using ExpressionEvaluator;
 
+Console.WriteLine("Expression Evaluator");
+Console.WriteLine("--------------------");
+
 while (true)
 {
     Console.Write("Expr: ");
