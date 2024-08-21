@@ -44,6 +44,7 @@ internal static class ReversePolishNotation
     /// </summary>
     private static List<string> TokeniseExpr(string infixExpr)
     {
+        bool previousWasValue = false;
         List<string> Tokenised = new();
 
         string currentString = "";
@@ -54,14 +55,22 @@ internal static class ReversePolishNotation
             // multi-character operator.
             if (OPERATORS.ContainsKey(infixExpr[i].ToString()))
             {
+                // Unary minus.
+                if (!previousWasValue && infixExpr[i] == '-')
+                {
+                    currentString += "0";
+                }
+
                 Tokenised.Add(currentString);
                 currentString = "";
+                previousWasValue = false;
 
                 Tokenised.Add(infixExpr[i].ToString());
             }
             else
             {
                 currentString += infixExpr[i];
+                previousWasValue = true;
             }
         }
 
